@@ -8,29 +8,35 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // the cennection between the script and the rigidbody component on the Player
+        // This connects the script to the Rigidbody component
         rb = GetComponent<Rigidbody>();
     }
+
     void Update()
     {
+        // Makes the Player jump
         if (Input.GetKeyDown(KeyCode.Space))
-        { // Makes the Player jump
+        { 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
-    // FixedUpdate is best for Physics calculations
+
+    // Detects when the Player overlaps with the coin
+    void OnTriggerEnter(Collider other) 
+    {
+        // IMPORTANT: Make sure your coin tag is exactly "coin" in Unity!
+        if (other.gameObject.CompareTag("coin"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
+
     void FixedUpdate()
     {
-        // Detects the arrow keys and WASD for horizontal and vertical movement
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        // Creates a direction vector (X, Y, Z) 
-        // Leaves Y at 0 because the Player is not moiving in the air yet 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
-        // Pushes the ball in that direction
         rb.AddForce(movement * speed);
-
     }
 }
