@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 10f;
+    public float jumpForce = 15f;
     private Rigidbody rb;
 
     void Start()
@@ -10,7 +11,13 @@ public class PlayerController : MonoBehaviour
         // the cennection between the script and the rigidbody component on the Player
         rb = GetComponent<Rigidbody>();
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        { // Makes the Player jump
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
     // FixedUpdate is best for Physics calculations
     void FixedUpdate()
     {
@@ -24,5 +31,6 @@ public class PlayerController : MonoBehaviour
 
         // Pushes the ball in that direction
         rb.AddForce(movement * speed);
+
     }
 }
