@@ -1,38 +1,48 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
     public float speed = 10f;
     public float jumpForce = 15f;
+    
+    // 1. Add these so you can drag your sounds in
+    public AudioClip jumpSound;
+    public AudioClip coinSound;
 
     private Rigidbody rb;
-    private AudioSource audioSource;
+    private AudioSource audioSource; // 2. This fixes the 'audioSource' error!
 
-    void Start() {
+    void Start() 
+    {
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>(); // Connects the component
     }
 
-    void Update() {
-        // Jump logic is best in Update to catch the button press instantly
-        if (Input.GetKeyDown(KeyCode.Space)) { 
+    void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        { 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            // Play jump sound
+            if(jumpSound != null) audioSource.PlayOneShot(jumpSound);
         }
     }
 
-    void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("coin")) {
+    void OnTriggerEnter(Collider other)  
+    {
+        if (other.gameObject.CompareTag("coin"))
+        {
+            // Play coin sound at the coin's position
+            AudioSource.PlayClipAtPoint(coinSound, other.transform.position);
             other.gameObject.SetActive(false);
-            
-            // Optional: play sound if audioSource is attached
-            if(audioSource != null) audioSource.Play();
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate() 
+    {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         rb.AddForce(movement * speed);
     }
-} 
+}
