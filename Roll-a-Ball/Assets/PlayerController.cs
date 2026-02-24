@@ -5,17 +5,19 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public float jumpForce = 15f;
     
-    // 1. Add these so you can drag your sounds in
     public AudioClip jumpSound;
     public AudioClip coinSound;
 
+    public GameObject pickupVFX;    
+    public GameObject explosionVFX;
+
     private Rigidbody rb;
-    private AudioSource audioSource; // 2. This fixes the 'audioSource' error!
+    private AudioSource audioSource; 
 
     void Start() 
     {
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>(); // Connects the component
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     void Update() 
@@ -23,7 +25,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         { 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            // Play jump sound
             if(jumpSound != null) audioSource.PlayOneShot(jumpSound);
         }
     }
@@ -32,9 +33,24 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("coin"))
         {
-            // Play coin sound at the coin's position
+            if (pickupVFX != null) 
+            {
+                Instantiate(pickupVFX, other.transform.position, Quaternion.identity);
+            }
+
             AudioSource.PlayClipAtPoint(coinSound, other.transform.position);
             other.gameObject.SetActive(false);
+        }
+
+        // For the Enemy/Explosion
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (explosionVFX != null)
+            {
+                Instantiate(explosionVFX, transform.position, Quaternion.identity);
+            }
+
+            gameObject.SetActive(false); 
         }
     }
 
