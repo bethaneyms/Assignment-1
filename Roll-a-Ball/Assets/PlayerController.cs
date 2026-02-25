@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject pickupVFX;    
     public GameObject explosionVFX;
+    public TextMeshProUGUI gameOverText; 
 
     private Rigidbody rb;
     private AudioSource audioSource; 
@@ -38,8 +40,9 @@ public class PlayerController : MonoBehaviour
                 Instantiate(pickupVFX, other.transform.position, Quaternion.identity);
             }
 
-            AudioSource.PlayClipAtPoint(coinSound, other.transform.position);
+            AudioSource.PlayClipAtPoint(coinSound, other.transform.position, 1.0f);
             other.gameObject.SetActive(false);
+            Debug.Log("Coin collected!");
         }
 
         // For the Enemy/Explosion
