@@ -5,7 +5,6 @@ public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
-    private Animator anim;
 
     void Start()
     {
@@ -15,27 +14,22 @@ public class EnemyMovement : MonoBehaviour
         if (playerObject != null)
         {
             player = playerObject.transform;
-            Debug.Log("Player found");
         }
-        else
-        {
-            Debug.Log("Player NOT found");
-        }
-
-        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        if (player != null)
+        if (player == null) return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (distance > agent.stoppingDistance)
         {
             agent.SetDestination(player.position);
-            Debug.Log("Setting destination");
         }
-
-        if (anim != null)
+        else
         {
-            anim.SetFloat("speed_f", agent.velocity.magnitude);
+            agent.ResetPath();
         }
     }
 }
