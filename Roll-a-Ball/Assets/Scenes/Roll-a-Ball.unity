@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 74456d22125ed4ffdab62dba3f357d66, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -282,7 +282,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &257960112
 BoxCollider:
@@ -885,6 +885,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709709500}
   m_CullTransparentMesh: 1
+--- !u!1 &1009838816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1009838818}
+  - component: {fileID: 1009838817}
+  m_Layer: 0
+  m_Name: Light Probe Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!220 &1009838817
+LightProbeGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009838816}
+  m_Enabled: 1
+  m_SourcePositions:
+  - {x: -6.198901, y: 0.49455753, z: -1.7464366}
+  - {x: -3.4575276, y: 0.5028326, z: 0.87080574}
+  - {x: -9.581165, y: -1.0000002, z: -0.7358346}
+  - {x: -1.4407796, y: -2.4402523, z: 10.025148}
+  - {x: -0.99999934, y: 0.99999976, z: 0.6704771}
+  - {x: -9.115318, y: 0.4166648, z: 0.6311425}
+  - {x: -14.472778, y: -1.0000006, z: 3.910304}
+  - {x: -8.975825, y: -1, z: 6.9732285}
+  m_Dering: 1
+--- !u!4 &1009838818
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009838816}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.081709385, y: 0.68546534, z: 0.050953466, w: -0.72170955}
+  m_LocalPosition: {x: 3.05, y: 1.31, z: 5.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -10.824, y: 272.738, z: 2.245}
 --- !u!1 &1052037155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1211,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 15
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1200,7 +1250,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1223,13 +1273,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079257346}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: -39, y: 7.54, z: -21.7}
+  m_LocalRotation: {x: 0.6276897, y: 0.25630957, z: 0.34335023, w: 0.64993984}
+  m_LocalPosition: {x: -52.9, y: 8.5, z: -2.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 39.785, y: 83.978, z: 91.772}
 --- !u!1 &1125500568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1971,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1304341201
 BoxCollider:
@@ -2111,7 +2161,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1526676106
 BoxCollider:
@@ -2255,7 +2305,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1556653941
 BoxCollider:
@@ -2682,7 +2732,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.2705882, b: 0, a: 1}
-  m_Intensity: 30
+  m_Intensity: 100
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2768,7 +2818,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1938507060
 BoxCollider:
@@ -3792,3 +3842,4 @@ SceneRoots:
   - {fileID: 640252702}
   - {fileID: 1079257349}
   - {fileID: 1688649331}
+  - {fileID: 1009838818}
