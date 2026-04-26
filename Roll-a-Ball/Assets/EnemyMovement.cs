@@ -11,25 +11,21 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
         if (playerObject != null)
         {
             player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player tag not found!");
         }
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null || agent == null) return;
 
-        float distance = Vector3.Distance(transform.position, player.position);
-
-        if (distance > agent.stoppingDistance)
-        {
-            agent.SetDestination(player.position);
-        }
-        else
-        {
-            agent.ResetPath();
-        }
+        agent.SetDestination(player.position);
     }
 }
