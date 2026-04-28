@@ -1,14 +1,14 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    public float speed = 3f;
     private Transform player;
+    private Animator animator;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
@@ -24,8 +24,19 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (player == null || agent == null) return;
+        if (player == null) return;
 
-        agent.SetDestination(player.position);
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            player.position,
+            speed * Time.deltaTime
+        );
+
+        transform.LookAt(player);
+
+        if (animator != null)
+        {
+            animator.SetBool("isRunning", true);
+        }
     }
 }
