@@ -1,12 +1,13 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour 
 {
     [Header("Movement Settings")]
     public float speed = 10f;
     public float jumpForce = 15f;
-    
+
     [Header("Audio Clips")]
     public AudioClip jumpSound;
     public AudioClip coinSound;
@@ -20,7 +21,10 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI gameOverText; 
 
     private Rigidbody rb;
-    private AudioSource audioSource; 
+    private AudioSource audioSource;
+
+    private Vector3 targetPos;
+    [SerializeField] private bool isMoving = false;
 
     void Start() 
     {
@@ -33,19 +37,66 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         { 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            
-            if(jumpSound != null) audioSource.PlayOneShot(jumpSound);
+
+            if (jumpSound != null) audioSource.PlayOneShot(jumpSound);
 
             if (jumpVFX != null) 
             {
                 Instantiate(jumpVFX, transform.position, Quaternion.identity);
             }
         }
+
+        // Mouse/touch click movement
+        if (Pointer.current != null && Pointer.current.press.isPressed)
+        {
+            Vector2 aimPosition = Pointer.current.position.ReadValue();
+            Ray ray = Camera.main.ScreenPointToRay(aimPosition);
+
+            Debug.DrawRay(ray.origin, ray.direction * 50, Color.yellow);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                {
+                    targetPos = hit.point;
+                    isMoving = true;
+                }
+            }
+        }
+        else
+        {
+            isMoving = false;
+        }
+    }
+
+    void FixedUpdate() 
+    {
+        // Keyboard movement
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        rb.AddForce(movement * speed);
+
+        // Mouse click movement
+        if (isMoving)
+        {
+            Vector3 direction = targetPos - rb.position;
+            direction.Normalize();
+
+            rb.AddForce(direction * speed);
+        }
+
+        if (Vector3.Distance(rb.position, targetPos) < 0.5f)
+        {
+            isMoving = false;
+        }
     }
 
     void OnTriggerEnter(Collider other)  
     {
-        // Handling Coin Pickups
         if (other.gameObject.CompareTag("coin"))
         {
             if (pickupVFX != null) 
@@ -53,14 +104,12 @@ public class PlayerController : MonoBehaviour
                 Instantiate(pickupVFX, other.transform.position, Quaternion.identity);
             }
 
-            // Spatial audio played at 100% volume
             AudioSource.PlayClipAtPoint(coinSound, other.transform.position, 1.0f);
-            
+
             other.gameObject.SetActive(false);
             Debug.Log("Coin collected!");
         }
 
-        // Handling Enemy Collisions
         if (other.gameObject.CompareTag("Enemy"))
         {
             if (explosionVFX != null)
@@ -68,7 +117,6 @@ public class PlayerController : MonoBehaviour
                 Instantiate(explosionVFX, transform.position, Quaternion.identity);
             }
 
-            // Trigger Game Over UI if it exists
             if (gameOverText != null)
             {
                 gameOverText.gameObject.SetActive(true);
@@ -76,13 +124,5 @@ public class PlayerController : MonoBehaviour
 
             gameObject.SetActive(false); 
         }
-    }
-
-    void FixedUpdate() 
-    {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.AddForce(movement * speed);
     }
 }
